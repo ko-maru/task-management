@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { createTask } from './task';
 import { parseTaskId } from './taskId';
 import { parseTaskTitle } from './taskTitle';
+import { parseTaskStatus, STATUS_COMPLETE, STATUS_INCOMPLETE } from './taskStatus';
 
 // UUID 準拠の正規表現（簡易）
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -45,5 +46,15 @@ describe('タスク作成(createTask) - UUIDのみ許容の契約', () => {
     const title = 'やること';
     const t = createTask({ title: parseTaskTitle(title) });
     expect(t.title).toBe(title);
+  });
+
+  it('status を指定しなければ未完(incomplete)がデフォルトになる', () => {
+    const t = createTask({ title: parseTaskTitle('x') });
+  expect(t.status).toBe(STATUS_INCOMPLETE);
+  });
+
+  it('status を指定するとその値が使われる', () => {
+  const t = createTask({ title: parseTaskTitle('y'), status: parseTaskStatus(STATUS_COMPLETE) });
+  expect(t.status).toBe(STATUS_COMPLETE);
   });
 });
