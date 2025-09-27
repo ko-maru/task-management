@@ -3,6 +3,7 @@ import { createTask } from './task';
 import { parseTaskId } from './taskId';
 import { parseTaskTitle } from './taskTitle';
 import { parseTaskStatus, STATUS_COMPLETE, STATUS_INCOMPLETE } from './taskStatus';
+import { toggleTaskStatus } from './task';
 
 // UUID 準拠の正規表現（簡易）
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -56,5 +57,21 @@ describe('タスク作成(createTask) - UUIDのみ許容の契約', () => {
   it('status を指定するとその値が使われる', () => {
   const t = createTask({ title: parseTaskTitle('y'), status: parseTaskStatus(STATUS_COMPLETE) });
   expect(t.status).toBe(STATUS_COMPLETE);
+  });
+
+  it('未完 -> 完了 にトグルされる', () => {
+    const t = createTask({ title: parseTaskTitle('toggle') });
+    expect(t.status).toBe(STATUS_INCOMPLETE);
+    const toggled = toggleTaskStatus(t);
+    expect(toggled.status).toBe(STATUS_COMPLETE);
+    // 元のオブジェクトは変更されていない
+    expect(t.status).toBe(STATUS_INCOMPLETE);
+  });
+
+  it('2回トグルすると元に戻る', () => {
+    const t = createTask({ title: parseTaskTitle('toggle2') });
+    const t1 = toggleTaskStatus(t);
+    const t2 = toggleTaskStatus(t1);
+    expect(t2.status).toBe(t.status);
   });
 });

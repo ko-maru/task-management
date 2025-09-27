@@ -3,7 +3,7 @@ import type { TaskId } from './taskId';
 import { newTaskId } from './taskId';
 import type { TaskTitle } from './taskTitle';
 import type { TaskStatus } from './taskStatus';
-import { DEFAULT_TASK_STATUS } from './taskStatus';
+import { DEFAULT_TASK_STATUS, STATUS_COMPLETE, STATUS_INCOMPLETE } from './taskStatus';
 
 /**
  * タスク
@@ -34,4 +34,13 @@ export interface CreateTaskOptions {
 export function createTask({ title, id, status }: CreateTaskOptions): Task {
   const s = typeof status !== 'undefined' ? status : DEFAULT_TASK_STATUS;
   return { id: typeof id === 'undefined' ? newTaskId() : id, title, status: s };
+}
+
+/**
+ * Task のステータスをトグルする（純粋関数）。
+ * - 引数の Task を直接変更せず、新しい Task オブジェクトを返す。
+ */
+export function toggleTaskStatus(task: Task): Task {
+  const newStatus: TaskStatus = task.status === STATUS_COMPLETE ? STATUS_INCOMPLETE : STATUS_COMPLETE;
+  return { ...task, status: newStatus };
 }
