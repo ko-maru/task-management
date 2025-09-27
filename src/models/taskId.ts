@@ -9,7 +9,7 @@ export function newTaskId(): TaskId {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID() as TaskId;
   }
-  throw new Error('タスクIDを生成するためにcrypto.randomUUIDが必要です');
+  throw new Error('タスクIDを生成するには crypto.randomUUID が必要です');
 }
 
 /**
@@ -18,10 +18,10 @@ export function newTaskId(): TaskId {
 export function parseTaskId(input: unknown): TaskId {
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (typeof input !== 'string') {
-    throw new TypeError('idはUUIDである必要があります');
+    throw new TypeError('id は UUID 文字列である必要があります');
   }
   if (!uuidRegex.test(input)) {
-    throw new Error('idはUUIDである必要があります');
+    throw new Error('id は有効な UUID 形式である必要があります');
   }
   return input as TaskId;
 }
