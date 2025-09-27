@@ -26,11 +26,6 @@ export interface CreateTaskOptions {
  * タスクを作成する。引数はオブジェクト形式で受け取る。
  * title は必須（1文字以上）。id は任意で、未指定なら自動生成する。
  */
-export function createTask(opts: CreateTaskOptions): Task {
-  const { title, id } = opts;
-  // title は既に parseTaskTitle で検証して渡すことを期待する（契約プログラミング）
-  if (typeof id !== 'undefined') {
-    return { id, title };
-  }
-  return { id: newTaskId(), title };
+export function createTask({ title, id }: CreateTaskOptions): Task {
+  return { id: typeof id === 'undefined' ? newTaskId() : id, title };
 }
