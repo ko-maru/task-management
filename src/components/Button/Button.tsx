@@ -1,11 +1,11 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react"
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 /**
  * ボタンコンポーネントのプロパティ
  */
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 /**
  * ボタンコンポーネント
@@ -15,7 +15,7 @@ function Button({ children, ...rest }: ButtonProps) {
     <button type="button" {...rest}>
       {children}
     </button>
-  )
+  );
 }
 
-export default Button
+export default Button;
