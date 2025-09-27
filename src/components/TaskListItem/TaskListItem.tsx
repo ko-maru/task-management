@@ -8,15 +8,17 @@ type TaskListItemProps = {
 
 function TaskListItem({ title, completed, onToggle }: TaskListItemProps) {
   return (
-    <label className={styles.root}>
-      <input
-        type="checkbox"
-        checked={completed}
-        onChange={onToggle}
-        className={styles.checkbox}
-      />
-      <span className={styles.title}>{title}</span>
-    </label>
+    <li className={styles.root}>
+      <label className={styles.label}>
+        <input
+          type="checkbox"
+          checked={completed}
+          onChange={onToggle}
+          className={styles.checkbox}
+        />
+        <span className={styles.title}>{title}</span>
+      </label>
+    </li>
   );
 }
 
