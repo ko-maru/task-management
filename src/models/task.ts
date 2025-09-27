@@ -11,7 +11,7 @@ import { DEFAULT_TASK_STATUS } from './taskStatus';
 export interface Task {
   id: TaskId;
   // タスクのタイトル。未指定の場合は undefined。
-  title?: string;
+  title: string;
   // タスクのステータス（'incomplete' | 'complete'）
   status: TaskStatus;
 }
