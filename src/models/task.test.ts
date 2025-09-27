@@ -1,20 +1,22 @@
 import { describe, it, expect } from 'vitest';
 import { createTask } from './task';
 import { parseTaskId } from './taskId';
+import { parseTaskTitle } from './taskTitle';
 
 // UUID 準拠の正規表現（簡易）
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 describe('タスク作成(createTask) - UUIDのみ許容の契約', () => {
   it('idを指定しなければ自動でUUID形式のidが生成される', () => {
-    const t = createTask();
+  const t = createTask({ title: parseTaskTitle('task A') });
     expect(typeof t.id).toBe('string');
     expect(uuidRegex.test(t.id)).toBe(true);
+    expect(t.title).toBe('task A');
   });
 
   it('複数作成したときにidはユニークであり、いずれもUUID形式である', () => {
-    const a = createTask();
-    const b = createTask();
+  const a = createTask({ title: parseTaskTitle('a') });
+  const b = createTask({ title: parseTaskTitle('b') });
     expect(uuidRegex.test(a.id)).toBe(true);
     expect(uuidRegex.test(b.id)).toBe(true);
     expect(a.id).not.toBe(b.id);
@@ -24,7 +26,24 @@ describe('タスク作成(createTask) - UUIDのみ許容の契約', () => {
     const valid = '123e4567-e89b-12d3-a456-426614174000';
     // parseTaskId で検証してから createTask に渡すのが正しい呼び出し方
     const tid = parseTaskId(valid);
-    const t = createTask(tid);
+  const t = createTask({ id: tid, title: parseTaskTitle('with id') });
     expect(t.id).toBe(valid);
+    expect(t.title).toBe('with id');
+  });
+
+  it('title が空文字だと例外を投げる', () => {
+  expect(() => parseTaskTitle('')).toThrow();
+  });
+
+  it('title を省略すると例外を投げる（必須）', () => {
+    // title は必須になったため、引数無しはエラー
+    // @ts-expect-error テストで意図的に誤った呼び出しを行う
+    expect(() => createTask()).toThrow();
+  });
+
+  it('title を渡すと Task に反映される', () => {
+    const title = 'やること';
+    const t = createTask({ title: parseTaskTitle(title) });
+    expect(t.title).toBe(title);
   });
 });
