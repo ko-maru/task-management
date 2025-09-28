@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { createTask } from "../../models/task";
 import { parseTaskTitle } from "../../models/taskTitle";
 
+import styles from "./AddTask.module.css";
+
 type AddTaskProps = {
   onAdd: (task: ReturnType<typeof createTask>) => void;
 };
@@ -29,15 +31,23 @@ function AddTask({ onAdd }: AddTaskProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={title}
-        onChange={handleInputChange}
-        placeholder="タスクのタイトルを入力"
-      />
-      <button type="submit">追加</button>
-      {error && <div style={{ color: "red", fontSize: "0.9em" }}>{error}</div>}
+    <form onSubmit={handleSubmit} className={styles.root}>
+      <div className={styles.control}>
+        <label htmlFor="task-title" className={styles.label}>
+          <span className="sr-only">タスクのタイトル</span>
+          <input
+            type="text"
+            value={title}
+            onChange={handleInputChange}
+            placeholder="タスクのタイトルを入力"
+            className={styles.input}
+          />
+        </label>
+        <button type="submit" className={styles.button} aria-label="タスクを追加">
+          ＋
+        </button>
+      </div>
+      {error && <p role="alert" className={styles.error}>{error}</p>}
     </form>
   );
 }

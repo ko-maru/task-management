@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className={styles.root}>
-      <h1>タスク管理</h1>
+      <h1 className={styles.title}>タスク管理</h1>
       <AddTask onAdd={handleAddTask} />
       <TaskList>
         {tasks?.map((task) => (
