@@ -31,3 +31,11 @@ export function addTask(tasks: Tasks, newTask: Task): Tasks {
 export function updateTaskById(tasks: Tasks, updatedTask: Task): Tasks {
   return tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task));
 }
+
+/**
+ * 指定したIDのタスクをTasksリストから削除する。
+ * 見つからない場合は元のTasksリストをそのまま返す。
+ */
+export function removeTaskById(tasks: Tasks, id: TaskId): Tasks {
+  return tasks.filter((task) => task.id !== id);
+}

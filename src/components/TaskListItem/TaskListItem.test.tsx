@@ -9,6 +9,20 @@ import {
 } from "../../models/taskStatus";
 
 describe("TaskListItem", () => {
+  it("削除ボタンのクリックでonDeleteが呼ばれる", () => {
+    const handleDelete = vi.fn();
+    render(
+      <TaskListItem
+        task={createTask({
+          title: parseTaskTitle("削除テスト"),
+          status: parseTaskStatus(STATUS_INCOMPLETE),
+        })}
+        onDelete={handleDelete}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "削除" }));
+    expect(handleDelete).toHaveBeenCalledTimes(1);
+  });
   it("チェックボックスクリックでonToggleが呼ばれる", () => {
     const handleToggle = vi.fn();
     render(

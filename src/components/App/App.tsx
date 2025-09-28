@@ -7,11 +7,16 @@ import TaskListItem from "../TaskListItem";
 import styles from "./App.module.css";
 
 function App() {
-  const { tasks, addTask, toggleTask } = useTasks();
+  const { tasks, addTask, removeTask, toggleTask } = useTasks();
 
   const handleAddTask = (task: Task) => {
     addTask(task);
     console.debug("タスクを追加:", task);
+  };
+
+  const handleRemoveTask = (task: Task) => {
+    removeTask(task.id);
+    console.debug("タスクを削除:", task.id);
   };
 
   const handleToggleTask = (task: Task) => {
@@ -25,7 +30,12 @@ function App() {
       <AddTask onAdd={handleAddTask} />
       <TaskList>
         {tasks?.map((task) => (
-          <TaskListItem key={task.id} task={task} onToggle={handleToggleTask} />
+          <TaskListItem
+            key={task.id}
+            task={task}
+            onToggle={handleToggleTask}
+            onDelete={handleRemoveTask}
+          />
         ))}
       </TaskList>
     </div>

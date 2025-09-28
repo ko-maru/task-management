@@ -15,6 +15,17 @@ function addTask(task: Task) {
 }
 
 /**
+ * タスクを削除する。
+ */
+async function removeTask(taskId: TaskId) {
+  try {
+    await db.tasks.delete(taskId);
+  } catch (error) {
+    console.error("タスク削除時にエラーが発生:", error);
+  }
+}
+
+/**
  * タスクの完了状態を切り替える。
  */
 async function toggleTask(taskId: TaskId) {
@@ -38,6 +49,7 @@ function useTasks() {
   return {
     tasks,
     addTask,
+    removeTask,
     toggleTask,
   };
 }
