@@ -27,8 +27,7 @@ function App() {
         {tasks?.map((task) => (
           <TaskListItem
             key={task.id}
-            title={task.title}
-            completed={task.status === STATUS_COMPLETE}
+            task={task}
             onToggle={() => handleToggleTask(task.id)}
           />
         ))}
