@@ -1,33 +1,22 @@
-import { useState } from "react";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
 import TaskListItem from "./components/TaskListItem";
-import {
-  addTask,
-  getTaskById,
-  updateTaskById,
-  type Tasks,
-} from "./models/tasks";
 import { STATUS_COMPLETE } from "./models/taskStatus";
 import type { TaskId } from "./models/taskId";
-import { toggleTaskStatus } from "./models/task";
+import { type Task } from "./models/task";
+import useTasks from "./hooks/useTasks";
 
 function App() {
-  const [tasks, setTasks] = useState<Tasks>([]);
+  const { tasks, addTask, toggleTask } = useTasks();
 
-  const handleAddTask = (task: (typeof tasks)[number]) => {
-    setTasks((prevTasks) => addTask(prevTasks, task));
-    console.log("Added task:", task);
+  const handleAddTask = (task: Task) => {
+    addTask(task);
+    console.debug("タスクを追加:", task);
   };
 
   const handleToggleTask = (taskId: TaskId) => {
-    setTasks((prevTasks) => {
-      const task = getTaskById(prevTasks, taskId);
-      if (!task) return prevTasks;
-
-      const updatedTask = toggleTaskStatus(task);
-      return updateTaskById(prevTasks, updatedTask);
-    });
+    toggleTask(taskId);
+    console.debug("タスクのステータスを切り替え:", taskId);
   };
 
   return (
@@ -35,7 +24,7 @@ function App() {
       <h1>タスク管理</h1>
       <AddTask onAdd={handleAddTask} />
       <TaskList>
-        {tasks.map((task) => (
+        {tasks?.map((task) => (
           <TaskListItem
             key={task.id}
             title={task.title}
