@@ -9,7 +9,19 @@ export type Tasks = Task[];
  * 見つからない場合はundefinedを返す。
  */
 export function getTaskById(tasks: Tasks, id: TaskId): Task | undefined {
-	return tasks.find(task => task.id === id);
+  return tasks.find((task) => task.id === id);
+}
+
+/**
+ * 新しいタスクをTasksリストに追加する。
+ * 既に同じIDのタスクが存在する場合はエラーを投げる。
+ */
+export function addTask(tasks: Tasks, newTask: Task): Tasks {
+  if (tasks.find((task) => task.id === newTask.id)) {
+    throw new Error(`IDが重複しています: ${newTask.id}`);
+  }
+
+  return [...tasks, newTask];
 }
 
 /**
@@ -17,5 +29,5 @@ export function getTaskById(tasks: Tasks, id: TaskId): Task | undefined {
  * 見つからない場合は元のTasksリストをそのまま返す。
  */
 export function updateTaskById(tasks: Tasks, updatedTask: Task): Tasks {
-  return tasks.map(task => task.id === updatedTask.id ? updatedTask : task);
+  return tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task));
 }
