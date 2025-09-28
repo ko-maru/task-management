@@ -1,8 +1,8 @@
-import AddTask from "./components/AddTask";
-import TaskList from "./components/TaskList";
-import TaskListItem from "./components/TaskListItem";
-import { type Task } from "./models/task";
-import useTasks from "./hooks/useTasks";
+import useTasks from "../../hooks/useTasks";
+import type { Task } from "../../models/task";
+import AddTask from "../AddTask";
+import TaskList from "../TaskList";
+import TaskListItem from "../TaskListItem";
 
 function App() {
   const { tasks, addTask, toggleTask } = useTasks();
