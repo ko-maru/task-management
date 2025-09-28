@@ -13,3 +13,8 @@
 .title {
 	font-size: 1rem;
 }
+
+.checkbox:checked + .title {
+	text-decoration: line-through;
+	color: #888;
+}
