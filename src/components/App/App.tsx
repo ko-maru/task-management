@@ -4,6 +4,8 @@ import AddTask from "../AddTask";
 import TaskList from "../TaskList";
 import TaskListItem from "../TaskListItem";
 
+import styles from "./App.module.css";
+
 function App() {
   const { tasks, addTask, toggleTask } = useTasks();
 
@@ -18,7 +20,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className={styles.root}>
       <h1>タスク管理</h1>
       <AddTask onAdd={handleAddTask} />
       <TaskList>
