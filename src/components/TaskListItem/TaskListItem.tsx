@@ -4,7 +4,7 @@ import styles from "./TaskListItem.module.css";
 
 type TaskListItemProps = {
   task: Task;
-  onToggle?: () => void;
+  onToggle?: (task: Task) => void;
 };
 
 function TaskListItem({ task, onToggle }: TaskListItemProps) {
@@ -14,7 +14,7 @@ function TaskListItem({ task, onToggle }: TaskListItemProps) {
         <input
           type="checkbox"
           checked={task.status === STATUS_COMPLETE}
-          onChange={onToggle}
+          onChange={() => onToggle?.(task)}
           className={styles.checkbox}
         />
         <span className={styles.title}>{task.title}</span>
