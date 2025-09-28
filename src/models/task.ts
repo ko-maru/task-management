@@ -14,6 +14,8 @@ export interface Task {
   title: string;
   // タスクのステータス（'incomplete' | 'complete'）
   status: TaskStatus;
+  // 作成日時（ISO文字列）
+  createdAt: string;
 }
 
 /**
@@ -33,7 +35,8 @@ export interface CreateTaskOptions {
  */
 export function createTask({ title, id, status }: CreateTaskOptions): Task {
   const s = typeof status !== 'undefined' ? status : DEFAULT_TASK_STATUS;
-  return { id: typeof id === 'undefined' ? newTaskId() : id, title, status: s };
+  const createdAt = new Date().toISOString();
+  return { id: typeof id === 'undefined' ? newTaskId() : id, title, status: s, createdAt };
 }
 
 /**

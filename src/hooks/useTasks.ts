@@ -44,7 +44,7 @@ async function toggleTask(taskId: TaskId) {
  * タスクの一覧を取得し、タスクの追加・更新関数を提供するカスタムフック。
  */
 function useTasks() {
-  const tasks = useLiveQuery(() => db.tasks.toArray());
+  const tasks = useLiveQuery(() => db.tasks.orderBy("createdAt").reverse().toArray());
 
   return {
     tasks,

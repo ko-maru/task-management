@@ -6,7 +6,7 @@ const db = new Dexie("TaskManagementDB") as Dexie & {
 };
 
 db.version(1).stores({
-  tasks: "++id, title, status",
+  tasks: "++id, createdAt, title, status",
 });
 
 export { db };
